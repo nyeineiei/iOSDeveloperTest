@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <script>
+            
+            function makeid() { var possible = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz"; return possible.charAt(Math.floor(Math.random() * possible.length)); }
+            
+            function myFunction() {
+                document.getElementById("demo").innerHTML = makeid();
+            }
+        
+            </script>
+    </head>
+    
+    <body>
+        
+        <h2>Random Number Generated</h2>
+        <p id="demo"></p>
+        
+        <script> myFunction() </script>
+        
+        
+    </body>
+</html> 
