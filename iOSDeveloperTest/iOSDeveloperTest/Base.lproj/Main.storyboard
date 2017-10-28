@@ -4,7 +4,7 @@
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13174"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13173"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -31,13 +31,52 @@
                                 </collectionViewFlowLayout>
                                 <cells/>
                             </collectionView>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="e1P-Pw-nl4">
+                                <rect key="frame" x="0.0" y="618" width="375" height="49"/>
+                                <subviews>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="OBW-Hb-Al5">
+                                        <rect key="frame" x="10" y="9.5" width="59" height="30"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="30" id="XVj-OI-AXe"/>
+                                            <constraint firstAttribute="width" constant="59" id="uZx-W4-fBH"/>
+                                        </constraints>
+                                        <state key="normal" title="Previous"/>
+                                        <connections>
+                                            <action selector="clickBtnPreivous:" destination="BYZ-38-t0r" eventType="touchUpInside" id="5Cq-bL-3vM"/>
+                                        </connections>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="vsL-OC-qEA">
+                                        <rect key="frame" x="306" y="9.5" width="59" height="30"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="30" id="GOt-Lk-WaV"/>
+                                            <constraint firstAttribute="width" constant="59" id="b1a-XU-sfI"/>
+                                        </constraints>
+                                        <state key="normal" title="Previous"/>
+                                        <connections>
+                                            <action selector="clickBtnNext:" destination="BYZ-38-t0r" eventType="touchUpInside" id="uae-51-UEm"/>
+                                        </connections>
+                                    </button>
+                                </subviews>
+                                <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstItem="OBW-Hb-Al5" firstAttribute="leading" secondItem="e1P-Pw-nl4" secondAttribute="leading" constant="10" id="4z7-23-G6w"/>
+                                    <constraint firstAttribute="trailing" secondItem="vsL-OC-qEA" secondAttribute="trailing" constant="10" id="9yU-ud-Hdf"/>
+                                    <constraint firstItem="OBW-Hb-Al5" firstAttribute="centerY" secondItem="e1P-Pw-nl4" secondAttribute="centerY" id="sTq-Yg-cff"/>
+                                    <constraint firstAttribute="height" constant="49" id="vsv-bB-X2a"/>
+                                    <constraint firstItem="vsL-OC-qEA" firstAttribute="centerY" secondItem="OBW-Hb-Al5" secondAttribute="centerY" id="xbq-Ce-JPl"/>
+                                </constraints>
+                            </view>
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
                             <constraint firstItem="9Hy-kL-Q9I" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="3xn-IW-vCR"/>
                             <constraint firstItem="9Hy-kL-Q9I" firstAttribute="height" secondItem="8bC-Xf-vdC" secondAttribute="height" id="9f0-Le-nb8"/>
                             <constraint firstItem="9Hy-kL-Q9I" firstAttribute="width" secondItem="8bC-Xf-vdC" secondAttribute="width" id="d3w-fC-akb"/>
+                            <constraint firstItem="e1P-Pw-nl4" firstAttribute="bottom" secondItem="9Hy-kL-Q9I" secondAttribute="bottom" id="m3j-6m-hG1"/>
+                            <constraint firstItem="e1P-Pw-nl4" firstAttribute="width" secondItem="9Hy-kL-Q9I" secondAttribute="width" id="qTf-H7-ULn"/>
                             <constraint firstItem="9Hy-kL-Q9I" firstAttribute="centerY" secondItem="8bC-Xf-vdC" secondAttribute="centerY" id="saP-80-8nf"/>
+                            <constraint firstItem="e1P-Pw-nl4" firstAttribute="trailing" secondItem="9Hy-kL-Q9I" secondAttribute="trailing" id="wPq-uz-Rpi"/>
+                            <constraint firstItem="e1P-Pw-nl4" firstAttribute="leading" secondItem="9Hy-kL-Q9I" secondAttribute="leading" id="xWb-vJ-DUn"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="4T7-g4-r6N"/>

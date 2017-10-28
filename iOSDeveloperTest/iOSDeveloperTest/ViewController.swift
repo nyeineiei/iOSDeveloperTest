@@ -79,6 +79,14 @@ class ViewController: UIViewController,UICollectionViewDelegate,UICollectionView
         collectionView.performBatchUpdates({ () -> Void in
             if(self.datasources.count != 0){
                 self.datasources.removeObject(at: self.indexPath.item)
+                if(self.datasources.count == 0){
+                    let view: UIView = UIView(frame: self.view.frame)
+                    view.backgroundColor = UIColor.gray
+                    let label: UILabel = UILabel(frame:CGRect(x: view.frame.width/2, y: view.frame.height/2, width: 200, height: 30))
+                    label.text = "No page added."
+                    view.addSubview(label)
+                    self.collectionView.addSubview(view)
+                }
             }else{
                 return;
             }
@@ -109,7 +117,6 @@ class ViewController: UIViewController,UICollectionViewDelegate,UICollectionView
 
         let visibleIndexPath: IndexPath = collectionView.indexPathForItem(at: visiblePoint)!
         self.indexPath = visibleIndexPath;
-        print(visibleIndexPath)
     }
     
     func getRandomColor() -> UIColor{
@@ -130,6 +137,40 @@ class ViewController: UIViewController,UICollectionViewDelegate,UICollectionView
         let rand = Int(arc4random_uniform(26))
         availableTiles = alphabet[rand]
         return availableTiles
+    }
+    
+    @IBAction func clickBtnPreivous(_ sender: Any) {
+        let visibleItems: NSArray = self.collectionView.indexPathsForVisibleItems as NSArray
+        let currentItem: IndexPath = visibleItems.object(at: 0) as! IndexPath
+        let previousItem: IndexPath = IndexPath(item: currentItem.item - 1, section: 0)
+        
+        if previousItem.row < datasources.count && previousItem.row != -1 {
+            self.collectionView.scrollToItem(at: previousItem, at: .right, animated: true)
+        }
+    }
+    
+    @IBAction func clickBtnNext(_ sender: Any) {
+        let visibleItems: NSArray = self.collectionView.indexPathsForVisibleItems as NSArray
+        let currentItem: IndexPath = visibleItems.object(at: 0) as! IndexPath
+        let nextItem: IndexPath = IndexPath(item: currentItem.item + 1, section: 0)
+        // next item was greater than the data.count
+        if nextItem.row < datasources.count {
+            self.collectionView.scrollToItem(at: nextItem, at: .left, animated: true)
+
+        }
+    }
+}
+
+extension ViewController:UIScrollViewDelegate{
+    func scrollViewWillEndDragging(_ scrollView: UIScrollView, withVelocity velocity: CGPoint, targetContentOffset: UnsafeMutablePointer<CGPoint>) {
+        let layout = self.collectionView?.collectionViewLayout as! UICollectionViewFlowLayout
+        let cellwidth = layout.itemSize.width + layout.minimumLineSpacing
+        print(targetContentOffset.pointee)
+        var offset = targetContentOffset.pointee
+        let index = (offset.x + scrollView.contentInset.left)/cellwidth
+        let roundedIndex = round(index)
+        offset = CGPoint(x:roundedIndex * cellwidth - scrollView.contentInset.left, y:-scrollView.contentInset.top)
+        targetContentOffset.pointee = offset
     }
 }
 
