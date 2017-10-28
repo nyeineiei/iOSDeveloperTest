@@ -27,15 +27,28 @@
                         <nil key="textColor"/>
                         <nil key="highlightedColor"/>
                     </label>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="1" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="91n-ZE-Wp8">
+                        <rect key="frame" x="167" y="378" width="40" height="40"/>
+                        <constraints>
+                            <constraint firstAttribute="width" constant="40" id="2sK-ed-nnA"/>
+                            <constraint firstAttribute="height" constant="40" id="WSq-A2-Q51"/>
+                        </constraints>
+                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                        <nil key="textColor"/>
+                        <nil key="highlightedColor"/>
+                    </label>
                 </subviews>
             </view>
             <constraints>
                 <constraint firstItem="TsI-tH-amk" firstAttribute="centerX" secondItem="gTV-IL-0wX" secondAttribute="centerX" id="ASI-6p-XV2"/>
                 <constraint firstItem="TsI-tH-amk" firstAttribute="centerY" secondItem="gTV-IL-0wX" secondAttribute="centerY" id="E7A-Ef-1Ks"/>
+                <constraint firstItem="91n-ZE-Wp8" firstAttribute="leading" secondItem="TsI-tH-amk" secondAttribute="leading" id="KvQ-8t-A0x"/>
+                <constraint firstItem="91n-ZE-Wp8" firstAttribute="top" secondItem="TsI-tH-amk" secondAttribute="bottom" constant="24.5" id="gOq-kx-lLc"/>
             </constraints>
             <size key="customSize" width="50" height="393"/>
             <connections>
                 <outlet property="label" destination="TsI-tH-amk" id="tuI-9J-jJl"/>
+                <outlet property="position" destination="91n-ZE-Wp8" id="T69-rk-luq"/>
             </connections>
             <point key="canvasLocation" x="24.5" y="-119.5"/>
         </collectionViewCell>

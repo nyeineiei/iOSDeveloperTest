@@ -10,36 +10,16 @@ import UIKit
 import WebKit
 
 class CustomCollectionViewCell: UICollectionViewCell {
-
     @IBOutlet weak var label: UILabel!
+    @IBOutlet weak var position: UILabel!
+    
     override func awakeFromNib() {
         super.awakeFromNib()
-        self.backgroundColor = .random()
-        self.label.text = self.randomizeAvailableLetters()
-        print(self.label.text!)
+        
     }
     
-    func randomizeAvailableLetters() -> String {
-        let alphabet: [String] = ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z"]
-        var availableTiles:String!
-        let rand = Int(arc4random_uniform(26))
-        availableTiles = alphabet[rand]
-        return availableTiles
-    }
-    
-}
-
-extension CGFloat {
-    static func random() -> CGFloat {
-        return CGFloat(arc4random()) / CGFloat(UInt32.max)
-    }
-}
-
-extension UIColor {
-    static func random() -> UIColor {
-        return UIColor(red:   .random(),
-                       green: .random(),
-                       blue:  .random(),
-                       alpha: 1.0)
+    func setData(data:NSDictionary) {
+        self.backgroundColor = data.object(forKey: "Color") as? UIColor
+        self.label.text = data.object(forKey: "String") as? String
     }
 }
