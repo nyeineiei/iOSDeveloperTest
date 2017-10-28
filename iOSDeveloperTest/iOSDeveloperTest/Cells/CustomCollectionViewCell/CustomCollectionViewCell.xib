@@ -17,25 +17,25 @@
                 <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                 <subviews>
-                    <wkWebView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="amT-9u-aVp">
-                        <rect key="frame" x="-0.5" y="-0.5" width="375" height="667"/>
-                        <color key="backgroundColor" red="0.36078431370000003" green="0.38823529410000002" blue="0.4039215686" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                        <wkWebViewConfiguration key="configuration">
-                            <audiovisualMediaTypes key="mediaTypesRequiringUserActionForPlayback" none="YES"/>
-                            <wkPreferences key="preferences"/>
-                        </wkWebViewConfiguration>
-                    </wkWebView>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="1" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="TsI-tH-amk">
+                        <rect key="frame" x="167.5" y="313.5" width="40" height="40"/>
+                        <constraints>
+                            <constraint firstAttribute="width" constant="40" id="Y1b-nU-FAt"/>
+                            <constraint firstAttribute="height" constant="40" id="aZu-Cm-iT0"/>
+                        </constraints>
+                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                        <nil key="textColor"/>
+                        <nil key="highlightedColor"/>
+                    </label>
                 </subviews>
             </view>
             <constraints>
-                <constraint firstItem="amT-9u-aVp" firstAttribute="height" secondItem="gTV-IL-0wX" secondAttribute="height" id="4i3-89-ffz"/>
-                <constraint firstItem="amT-9u-aVp" firstAttribute="centerX" secondItem="gTV-IL-0wX" secondAttribute="centerX" id="AAh-kP-vHN"/>
-                <constraint firstItem="amT-9u-aVp" firstAttribute="centerY" secondItem="gTV-IL-0wX" secondAttribute="centerY" id="WmD-VS-Aea"/>
-                <constraint firstItem="amT-9u-aVp" firstAttribute="width" secondItem="gTV-IL-0wX" secondAttribute="width" id="iBa-mK-dFj"/>
+                <constraint firstItem="TsI-tH-amk" firstAttribute="centerX" secondItem="gTV-IL-0wX" secondAttribute="centerX" id="ASI-6p-XV2"/>
+                <constraint firstItem="TsI-tH-amk" firstAttribute="centerY" secondItem="gTV-IL-0wX" secondAttribute="centerY" id="E7A-Ef-1Ks"/>
             </constraints>
             <size key="customSize" width="50" height="393"/>
             <connections>
-                <outlet property="webView" destination="amT-9u-aVp" id="Oa8-2Y-RMS"/>
+                <outlet property="label" destination="TsI-tH-amk" id="tuI-9J-jJl"/>
             </connections>
             <point key="canvasLocation" x="24.5" y="-119.5"/>
         </collectionViewCell>
