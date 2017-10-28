@@ -12,7 +12,7 @@ class ViewController: UIViewController,UICollectionViewDelegate,UICollectionView
     
     @IBOutlet weak var collectionView: UICollectionView!
     let cellIdentifier:String = "cell"
-    var indexPath:IndexPath!
+    var indexPath:IndexPath = IndexPath(item: 0, section: 0)
     var datasources = [] as NSMutableArray
     
     override func viewDidLoad() {
@@ -76,30 +76,27 @@ class ViewController: UIViewController,UICollectionViewDelegate,UICollectionView
     }
     
     @objc func deleteCollectionView() {
-//        collectionView.performBatchUpdates({ () -> Void in
-//            self.collectionView.deleteItems(at: [self.indexPath])
-//            if(self.itemCount != 0){
-//                self.itemCount -= 1
-//            }else{
-//                return;
-//            }
-//            self.collectionView.reloadData()
-//        }, completion:nil)
+        collectionView.performBatchUpdates({ () -> Void in
+            if(self.datasources.count != 0){
+                self.datasources.removeObject(at: self.indexPath.item)
+            }else{
+                return;
+            }
+            self.collectionView.deleteItems(at: [self.indexPath])
+        }, completion:nil)
     }
     
     @objc func addCollectionView() {
         let newItem:NSDictionary = ["Color" : self.getRandomColor(),"String" : self.randomizeAvailableLetters()]
-        datasources.add(newItem)
-//        let insertIndexPath = IndexPath(item: 2, section: 0)
-////        if(self.indexPath.item != 0){
-////            self.indexPath.item -= 1
-////        }
-//        self.collectionView.insertItems(at: [insertIndexPath])
-        
+        datasources.insert(newItem, at: self.indexPath.item)
+
         self.collectionView!.performBatchUpdates({
-            let insertIndexPath = IndexPath(item: 2, section: 0)
-            self.collectionView.insertItems(at: [insertIndexPath])
-        }, completion: nil)
+            //let insertIndexPath = IndexPath(item: 2, section: 0)
+            self.collectionView.insertItems(at: [self.indexPath])
+        }, completion: {
+            finished in
+            self.collectionView.scrollToItem(at: self.indexPath, at: UICollectionViewScrollPosition.centeredVertically, animated: true)
+        })
     }
     
     func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
