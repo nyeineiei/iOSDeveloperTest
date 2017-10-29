@@ -1,47 +1,34 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <script>
-            
-            function makeid() { var possible = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz"; return possible.charAt(Math.floor(Math.random() * possible.length)); }
-            
-            function myFunction() {
-                document.getElementById("demo").innerHTML = makeid();
+        <style>
+            .container{
+                position: absolute;
+                top: 0;
+                bottom: 0;
+                width: 100%;
+                background-color: #bdf300;
             }
-        </script>
+        .center{
+            position:absolute;
+            height: X px;
+            width: Y px;
+            left:50%;
+            top:50%;
+            margin-top:- X/2 px;
+            margin-left:- Y/2 px;
+            text-shadow: black 0.01em 0.01em 0.01em
+        }
+        
+            </style>
     </head>
     
     <body>
-        
-        <h2>Random Number Generated</h2>
-        <p id="demo"></p>
-        
-        <script> myFunction() </script>
-        
+        <div class = "container" >
+            
+            <h2 class = "center" > X </h1>
+                
+        </div>
         
     </body>
 </html>
-
-<!--<!DOCTYPE html>-->
-<!--<html>-->
-<!--    <head>-->
-<!--        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>-->
-<!--        <script>-->
-<!--            $(document).ready(function() {-->
-<!--                              -->
-<!--                              function callNativeApp () {-->
-<!--                              try {-->
-<!--                              webkit.messageHandlers.callbackHandler.postMessage("camera");-->
-<!--                              } catch(err) {-->
-<!--                              console.log('The native context does not exist yet');-->
-<!--                              }-->
-<!--                              }-->
-<!--                              -->
-<!--                              $(".menu-camera-icon").click(function() {-->
-<!--                                                           callNativeApp();-->
-<!--                                                           });-->
-<!--                              });-->
-<!--            </script>-->
-<!--    </head>-->
-<!--</html>-->
-

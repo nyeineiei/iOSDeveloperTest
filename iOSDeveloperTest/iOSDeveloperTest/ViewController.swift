@@ -46,7 +46,6 @@ class ViewController: UIViewController,UICollectionViewDelegate,UICollectionView
         cell = self.collectionView.dequeueReusableCell(withReuseIdentifier: cellIdentifier, for: indexPath) as! CustomCollectionViewCell
         cell.setData(data: datasources[indexPath.item] as! NSDictionary)
         self.indexPath = indexPath
-        cell.position.text = String(indexPath.item);
         return cell
     }
     
@@ -104,6 +103,7 @@ class ViewController: UIViewController,UICollectionViewDelegate,UICollectionView
     }
     
     func setupCollectionView() {
+        self.collectionView.showsHorizontalScrollIndicator = false
         self.collectionView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
         let layout: UICollectionViewFlowLayout = UICollectionViewFlowLayout()
         layout.itemSize = CGSize(width: self.view.frame.width, height: self.collectionView.frame.height - 0)
