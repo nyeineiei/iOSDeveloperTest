@@ -11,6 +11,10 @@ import UIKit
 class ViewController: UIViewController,UICollectionViewDelegate,UICollectionViewDataSource{
     
     @IBOutlet weak var collectionView: UICollectionView!
+    @IBOutlet weak var vwBottmNavigationBar: UIView!
+    @IBOutlet weak var btnPrevious: UIButton!
+    @IBOutlet weak var btnNext: UIButton!
+    
     let cellIdentifier:String = "cell"
     var indexPath:IndexPath = IndexPath(item: 0, section: 0)
     var datasources = [] as NSMutableArray
@@ -19,35 +23,15 @@ class ViewController: UIViewController,UICollectionViewDelegate,UICollectionView
         super.viewDidLoad()
         self.setUpNavigationBar()
         self.setupData()
-        
-        let layout: UICollectionViewFlowLayout = UICollectionViewFlowLayout()
-        layout.sectionInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
-        layout.itemSize = CGSize(width: self.view.frame.width, height: self.view.frame.height - 100)
-        layout.minimumLineSpacing = 40
-        layout.scrollDirection = .horizontal;
-        self.collectionView!.collectionViewLayout = layout
-        
-        self.collectionView.register(UINib(nibName: "CustomCollectionViewCell", bundle: nil), forCellWithReuseIdentifier: cellIdentifier)
-        self.collectionView.delegate = self;
-        self.collectionView.dataSource = self;
-        
-        
+        self.setupCollectionView()
+        self.setUpBottomNavigationBar()
     }
     
-    func setupData() {
-        for _ in 0 ... 2 {
-            let myDict:NSDictionary = ["Color" : self.getRandomColor(),"String" : self.randomizeAvailableLetters()]
-            datasources.add(myDict)
-        }
-        
-        print(datasources)
-    }
-
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
-
+    
     // MARK: - UICollectionViewDataSource
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return self.datasources.count
@@ -61,12 +45,93 @@ class ViewController: UIViewController,UICollectionViewDelegate,UICollectionView
         var cell:CustomCollectionViewCell
         cell = self.collectionView.dequeueReusableCell(withReuseIdentifier: cellIdentifier, for: indexPath) as! CustomCollectionViewCell
         cell.setData(data: datasources[indexPath.item] as! NSDictionary)
+        self.indexPath = indexPath
         cell.position.text = String(indexPath.item);
         return cell
     }
     
-    // MARK: - Implementations
+    // MARK: - UIScrollViewDelegate
+    func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
+        var visibleRect = CGRect()
+        
+        visibleRect.origin = collectionView.contentOffset
+        visibleRect.size = collectionView.bounds.size
+        
+        let visiblePoint = CGPoint(x: visibleRect.midX, y: visibleRect.midY)
+        
+        let visibleIndexPath: IndexPath = collectionView.indexPathForItem(at: visiblePoint)!
+        self.indexPath = visibleIndexPath;
+    }
+    
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        var ratio:CGFloat = self.collectionView.contentOffset.x/self.collectionView.frame.size.width;
+        var page:NSInteger = NSInteger(floor(ratio))
+
+        if (page == self.datasources.count - 1)
+        {
+            self.btnNext.isUserInteractionEnabled = false
+            self.btnNext.alpha = 0.2
+            
+            self.btnPrevious.isUserInteractionEnabled = true
+            self.btnPrevious.alpha = 1
+        }
+        
+        if (page == 0)
+        {
+            self.btnPrevious.isUserInteractionEnabled = false
+            self.btnPrevious.alpha = 0.2
+            
+            self.btnNext.isUserInteractionEnabled = true
+            self.btnNext.alpha = 1
+        }
+        
+        if (page != self.datasources.count - 1 && page != 0)
+        {
+            self.btnNext.isUserInteractionEnabled = true
+            self.btnNext.alpha = 1
+            
+            self.btnPrevious.isUserInteractionEnabled = true
+            self.btnPrevious.alpha = 1
+        }
+    }
+    
+    // MARK: - Implementation
+    func setUpBottomNavigationBar() {
+        self.btnPrevious.isUserInteractionEnabled = false
+        self.btnPrevious.alpha = 0.2
+        
+        self.btnNext.isUserInteractionEnabled = true
+    }
+    
+    func setupCollectionView() {
+        self.collectionView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
+        let layout: UICollectionViewFlowLayout = UICollectionViewFlowLayout()
+        layout.itemSize = CGSize(width: self.view.frame.width, height: self.collectionView.frame.height - 0)
+        layout.minimumLineSpacing = 40
+        layout.scrollDirection = .horizontal;
+        self.collectionView!.collectionViewLayout = layout
+        
+        self.collectionView.register(UINib(nibName: "CustomCollectionViewCell", bundle: nil), forCellWithReuseIdentifier: cellIdentifier)
+        self.collectionView.delegate = self;
+        self.collectionView.dataSource = self;
+    }
+    
+    func setupData() {
+        for _ in 0 ... 2 {
+            let myDict:NSDictionary = ["Color" : self.getRandomColor(),"String" : self.randomizeAvailableLetters()]
+            datasources.add(myDict)
+        }
+        
+        print(datasources)
+    }
+    
     func setUpNavigationBar() {
+        self.title = "Test App"
+        let titleDict: NSDictionary = [NSAttributedStringKey.foregroundColor: UIColor.white]
+        self.navigationController?.navigationBar.titleTextAttributes = titleDict as? [NSAttributedStringKey : Any]
+        
+        self.navigationController?.navigationBar.barTintColor = UIColor.red
+        self.navigationController?.navigationBar.tintColor = UIColor.white
         let homeButton : UIBarButtonItem = UIBarButtonItem(title: "Add", style: UIBarButtonItemStyle.plain, target: self, action:#selector(addCollectionView))
         
         let logButton : UIBarButtonItem = UIBarButtonItem(title: "Delete", style: UIBarButtonItemStyle.plain, target: self, action: #selector(deleteCollectionView))
@@ -82,19 +147,38 @@ class ViewController: UIViewController,UICollectionViewDelegate,UICollectionView
                 if(self.datasources.count == 0){
                     let view: UIView = UIView(frame: self.view.frame)
                     view.backgroundColor = UIColor.gray
-                    let label: UILabel = UILabel(frame:CGRect(x: view.frame.width/2, y: view.frame.height/2, width: 200, height: 30))
+                    let label: UILabel = UILabel(frame:CGRect(x: view.frame.width/3, y: view.frame.height/2.7, width: 200, height: 30))
                     label.text = "No page added."
+                    view.tag = 101
                     view.addSubview(label)
                     self.collectionView.addSubview(view)
+                    
+                    self.btnNext.isUserInteractionEnabled = false;
+                    self.btnNext.alpha = 0.2
                 }
             }else{
-                return;
+                return
             }
             self.collectionView.deleteItems(at: [self.indexPath])
-        }, completion:nil)
+        }, completion: {
+            finished in
+            self.collectionView.reloadData()
+            if(self.indexPath.item == self.datasources.count - 1){
+                self.btnNext.isUserInteractionEnabled = false;
+                self.btnNext.alpha = 0.2
+            }else if (self.datasources.count == 1){
+                self.btnNext.isUserInteractionEnabled = false;
+                self.btnNext.alpha = 0.2
+                self.btnPrevious.isUserInteractionEnabled = false;
+                self.btnPrevious.alpha = 0.2
+            }
+        })
     }
     
     @objc func addCollectionView() {
+        if((self.view.viewWithTag(101)) != nil){
+            self.view.viewWithTag(101)?.removeFromSuperview()
+        }
         let newItem:NSDictionary = ["Color" : self.getRandomColor(),"String" : self.randomizeAvailableLetters()]
         datasources.insert(newItem, at: self.indexPath.item)
 
@@ -104,19 +188,17 @@ class ViewController: UIViewController,UICollectionViewDelegate,UICollectionView
         }, completion: {
             finished in
             self.collectionView.scrollToItem(at: self.indexPath, at: UICollectionViewScrollPosition.centeredVertically, animated: true)
+            if(self.datasources.count == 2){
+                self.btnNext.isUserInteractionEnabled = true;
+                self.btnNext.alpha = 1
+            }else if(self.datasources.count > 2 && self.indexPath.item != 0 && self.indexPath.item != self.datasources.count - 1){
+                self.btnNext.isUserInteractionEnabled = true;
+                self.btnNext.alpha = 1
+                
+                self.btnPrevious.isUserInteractionEnabled = true;
+                self.btnPrevious.alpha = 1
+            }
         })
-    }
-    
-    func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
-        var visibleRect = CGRect()
-
-        visibleRect.origin = collectionView.contentOffset
-        visibleRect.size = collectionView.bounds.size
-
-        let visiblePoint = CGPoint(x: visibleRect.midX, y: visibleRect.midY)
-
-        let visibleIndexPath: IndexPath = collectionView.indexPathForItem(at: visiblePoint)!
-        self.indexPath = visibleIndexPath;
     }
     
     func getRandomColor() -> UIColor{
